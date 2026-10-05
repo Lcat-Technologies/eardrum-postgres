@@ -3,8 +3,8 @@ package user
 import (
 	pgerror "errors" // Standard Go errors package
 
-	"github.com/GigaDesk/eardrum-interfaces/errors"
-	"github.com/GigaDesk/eardrum-interfaces/user"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/user"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

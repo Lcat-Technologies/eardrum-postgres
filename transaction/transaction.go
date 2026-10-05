@@ -6,8 +6,8 @@ import (
 	"strings"
 	"strconv"
 
-	"github.com/GigaDesk/eardrum-postgres/merchant"
-	"github.com/GigaDesk/eardrum-postgres/user"
+	"github.com/Lcat-Technologies/eardrum-postgres/merchant"
+	"github.com/Lcat-Technologies/eardrum-postgres/user"
 	"gorm.io/gorm"
     "crypto/rand"
 )
@@ -154,8 +154,8 @@ func (t Transaction) GetTransactionUnixTimeStamp() (int64, time.Time, error) {
 }
 
 
-// GetTransactionDeviceIMEI extracts the device IMEI from the OfflineTransactionID.
-func (t Transaction) GetTransactionDeviceIMEI() (string, error) {
+// GetTransactionDeviceID extracts the device ID from the OfflineTransactionID.
+func (t Transaction) GetTransactionDeviceID() (string, error) {
 	if t.OfflineTransactionID == "" {
 		return "", errors.New("offline transaction ID is empty")
 	}

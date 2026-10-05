@@ -1,16 +1,16 @@
-module github.com/GigaDesk/eardrum-postgres
+module github.com/Lcat-Technologies/eardrum-postgres
 
 go 1.23.2
 
 require (
-	github.com/GigaDesk/eardrum-interfaces v1.3.2
+	github.com/GigaDesk/eardrum-prefix v1.0.4
+	github.com/Lcat-Technologies/eardrum-interfaces v1.3.4
 	gorm.io/driver/postgres v1.6.0
 	gorm.io/gorm v1.30.0
 )
 
 require (
-	github.com/AlekSi/pointer v1.2.0 // indirect
-	github.com/GigaDesk/eardrum-prefix v1.0.4 // indirect
+	github.com/GigaDesk/eardrum-interfaces v1.2.7 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	golang.org/x/sys v0.29.0 // indirect

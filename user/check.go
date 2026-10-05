@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/GigaDesk/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
 	"gorm.io/gorm"
 	// Assuming the error helpers are available in this package
 )
