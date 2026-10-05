@@ -21,7 +21,7 @@ func CreateDevice(s device.NewDevice, Db *gorm.DB) (device.Device, error) {
 		// All other persistence failures -> 500 Internal Server Error
 		err1 := errors.New(errors.EARInternalError, err)
 		err1.Log()
-		return nil, err1
+		return nil, nil
 	}
 
 	return d, nil
