@@ -3,11 +3,11 @@ package user
 import (
 	pgerror "errors" // Standard Go errors package
 
-	"github.com/GigaDesk/eardrum-interfaces/user"
+	"github.com/Lcat-Technologies/eardrum-interfaces/user"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
-	"github.com/GigaDesk/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
 )
 
 // RegenerateQrCode generates a new UUID for the user's QR code by looking them up via username.

@@ -4,8 +4,8 @@ import (
 	pgerror "errors"
 	"time"
 
-	"github.com/GigaDesk/eardrum-interfaces/errors"
-	"github.com/GigaDesk/eardrum-interfaces/transaction"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/transaction"
 	"gorm.io/gorm"
 )
 

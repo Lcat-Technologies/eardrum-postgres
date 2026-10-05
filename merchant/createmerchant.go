@@ -1,8 +1,8 @@
 package merchant
 
 import (
-	"github.com/GigaDesk/eardrum-interfaces/errors"
-	"github.com/GigaDesk/eardrum-interfaces/merchant"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/merchant"
 	"gorm.io/gorm"
 )
 

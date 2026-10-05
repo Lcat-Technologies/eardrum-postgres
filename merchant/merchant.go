@@ -56,6 +56,14 @@ func (s Merchant) GetPinCode() *string {
 	return s.PinCode
 }
 
+// GetPinStatus returns true if the PIN code is populated.
+func (s Merchant) GetPinStatus() bool {
+    if s.PinCode == nil {
+        return false
+    }
+    return *s.PinCode != ""
+}
+
 // UnverifiedMerchant represents the unverified merchant model for the system.
 type UnverifiedMerchant struct {
 	gorm.Model
@@ -104,6 +112,14 @@ func (s UnverifiedMerchant) GetPassword() string {
 // Returns the security PIN code of the unverified merchant
 func (s UnverifiedMerchant) GetPinCode() *string {
 	return s.PinCode
+}
+
+// GetPinStatus returns true if the PIN code is populated.
+func (s UnverifiedMerchant) GetPinStatus() bool {
+    if s.PinCode == nil {
+        return false
+    }
+    return *s.PinCode != ""
 }
 
 // UniquenessCheck represents the availability status of a unique identifier (like phone or username),

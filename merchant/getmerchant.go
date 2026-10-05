@@ -3,8 +3,8 @@ package merchant
 import (
 	pgerror "errors"
 
-	"github.com/GigaDesk/eardrum-interfaces/errors"
-	"github.com/GigaDesk/eardrum-interfaces/merchant"
+	"github.com/Lcat-Technologies/eardrum-interfaces/errors"
+	"github.com/Lcat-Technologies/eardrum-interfaces/merchant"
 	"gorm.io/gorm"
 	// Import your custom error helpers
 )

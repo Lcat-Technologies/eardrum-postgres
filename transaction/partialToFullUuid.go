@@ -4,12 +4,12 @@ import (
     pgerror "errors"
     "os"
     "strconv"
-    "github.com/GigaDesk/eardrum-interfaces/errors"
+    "github.com/Lcat-Technologies/eardrum-interfaces/errors"
     "github.com/google/uuid"
     "github.com/rs/zerolog/log"
     "gorm.io/gorm"
     
-    "github.com/GigaDesk/eardrum-postgres/user" 
+    "github.com/Lcat-Technologies/eardrum-postgres/user" 
 )
 
 // FacialMatchThreshold is resolved dynamically from the environment.

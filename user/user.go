@@ -122,6 +122,19 @@ func (u User) GetPassport() *string {
 	return u.Passport
 }
 
+//returns true if the user has facial embeddings, otherwise false.
+func (u User) GetFaceEnrollmentStatus()bool{
+return len(u.FacialEmbeddings) > 0
+}
+
+// GetPinStatus returns true if the PIN code is populated.
+func (u User) GetPinStatus() bool {
+    if u.PinCode == nil {
+        return false
+    }
+    return *u.PinCode != ""
+}
+
 // MatchFace takes an incoming base64 embedding and matches it against the user's saved embeddings.
 // It returns true immediately if any saved embedding meets or exceeds the required threshold.
 func (u User) MatchFace(incomingB64 string, threshold float32) bool {
@@ -270,6 +283,14 @@ func (u UnverifiedUser) GetQrCodeBase64() string {
 	return base64Str
 }
 
+// GetPinStatus returns true if the PIN code is populated.
+func (u UnverifiedUser) GetPinStatus() bool {
+    if u.PinCode == nil {
+        return false
+    }
+    return *u.PinCode != ""
+}
+
 // GetFacialEmbeddings returns a pointer to a list of the unverified user's facial embeddings
 func (u UnverifiedUser) GetFacialEmbeddings() *[]string {
 	if u.FacialEmbeddings == nil {
@@ -319,6 +340,11 @@ func (u UnverifiedUser) MatchFace(incomingB64 string, threshold float32) bool {
 	}
 
 	return false
+}
+
+//returns true if the user has facial embeddings, otherwise false.
+func (u UnverifiedUser) GetFaceEnrollmentStatus()bool{
+return false
 }
 
 // UniquenessCheck represents the availability status of a unique identifier (like phone or username),
