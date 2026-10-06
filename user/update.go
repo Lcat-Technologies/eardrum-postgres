@@ -7,7 +7,7 @@ import (
     "github.com/Lcat-Technologies/eardrum-interfaces/user"
     "gorm.io/gorm"
     "github.com/lib/pq"
-    "github.com/GigaDesk/eardrum-prefix/validate"
+    "github.com/Lcat-Technologies/eardrum-prefix/validate"
 )
 
 // UpdatePassword updates the user's password using their username.
