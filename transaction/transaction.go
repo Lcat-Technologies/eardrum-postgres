@@ -1,15 +1,16 @@
 package transaction
 
 import (
-	"time"
 	"errors"
-	"strings"
 	"strconv"
+	"strings"
+	"time"
+
+	"crypto/rand"
 
 	"github.com/Lcat-Technologies/eardrum-postgres/merchant"
 	"github.com/Lcat-Technologies/eardrum-postgres/user"
 	"gorm.io/gorm"
-    "crypto/rand"
 )
 
 // Transaction represents a financial transaction.
