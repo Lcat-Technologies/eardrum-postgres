@@ -29,5 +29,5 @@ func CreateDevice(s device.NewDevice, Db *gorm.DB) (device.Device, error) {
         return nil, err1
     }
 
-    return d, nil
+    return &d, nil
 }
