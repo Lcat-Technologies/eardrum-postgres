@@ -16,6 +16,16 @@ func CreateDevice(s device.NewDevice, Db *gorm.DB) (device.Device, error) {
         DeviceModel: s.GetDeviceModel(),
     }
 
+    var dvc Device
+
+    check := db.Where("device_id = ?", deviceID).First(&dvc)
+
+    if check.Error == nil {
+       // Device exists — stop execution successfully
+       return nil, nil
+    }
+
+
     // 2. Create device record in the database
     if err := Db.Create(&d).Error; err != nil {
         // Check if the failure is due to a duplicate key (device already exists)
