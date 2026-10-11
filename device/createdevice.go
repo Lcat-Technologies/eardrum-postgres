@@ -18,7 +18,7 @@ func CreateDevice(s device.NewDevice, Db *gorm.DB) (device.Device, error) {
 
     var dvc Device
 
-    check := db.Where("device_id = ?", deviceID).First(&dvc)
+    check := Db.Where("device_id = ?", d.DeviceID).First(&dvc)
 
     if check.Error == nil {
        // Device exists — stop execution successfully
