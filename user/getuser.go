@@ -15,8 +15,8 @@ func GetUserWithPhoneNumber(Db *gorm.DB, PhoneNumber string) (user.User, error) 
 
 	// Find the first user that matches the input phonenumber
 	if err := Db.Where("phone_number = ?", PhoneNumber).First(&u).Error; err != nil {
-		
-			// 1. Check for the known "Not Found" condition
+
+		// 1. Check for the known "Not Found" condition
 		if pgerror.Is(err, gorm.ErrRecordNotFound) {
 			// Returns 404 Not Found
 			err1 := errors.New(errors.EARUserNotFoundByPhone, err)
@@ -35,50 +35,75 @@ func GetUserWithPhoneNumber(Db *gorm.DB, PhoneNumber string) (user.User, error) 
 
 // GetUserWithUsername finds a user by username.
 func GetUserWithUsername(Db *gorm.DB, Username string) (user.User, error) {
-    var u *User
+	var u *User
 
-    // Find the first user that matches the input username
-    if err := Db.Where("user_name = ?", Username).First(&u).Error; err != nil {
-        
-        // 1. Check for the known "Not Found" condition
-        if pgerror.Is(err, gorm.ErrRecordNotFound) {
-            // Returns 404 Not Found (Assuming EARUserNotFoundByUsername exists in your interfaces)
-            err1 := errors.New(errors.EARUserNotFoundByUsername, err)
-            err1.Log()
-            return nil, err1
-        }
+	// Find the first user that matches the input username
+	if err := Db.Where("user_name = ?", Username).First(&u).Error; err != nil {
 
-        // 2. All other errors (connection, query syntax, etc.) -> 500 Internal
-        err1 := errors.New(errors.EARUserLookupFailedByUsername, err)
-        err1.Log()
-        return nil, err1
-    }
+		// 1. Check for the known "Not Found" condition
+		if pgerror.Is(err, gorm.ErrRecordNotFound) {
+			// Returns 404 Not Found (Assuming EARUserNotFoundByUsername exists in your interfaces)
+			err1 := errors.New(errors.EARUserNotFoundByUsername, err)
+			err1.Log()
+			return nil, err1
+		}
 
-    return u, nil
+		// 2. All other errors (connection, query syntax, etc.) -> 500 Internal
+		err1 := errors.New(errors.EARUserLookupFailedByUsername, err)
+		err1.Log()
+		return nil, err1
+	}
+
+	return u, nil
 }
+
+// GetUsersWithUsernames finds multiple users by a slice of usernames.
+func GetUsersWithUsernames(Db *gorm.DB, Usernames []string) ([]user.User, error) {
+	if len(Usernames) == 0 {
+		return nil, nil
+	}
+
+	var dbUsers []*User
+
+	// Use `IN ?` to fetch all matching users in a single database round-trip
+	if err := Db.Where("user_name IN ?", Usernames).Find(&dbUsers).Error; err != nil {
+		// All database lookup/connection errors -> 500 Internal
+		err1 := errors.New(errors.EARUserLookupFailedByUsername, err)
+		err1.Log()
+		return nil, err1
+	}
+
+	// Convert concrete slice to interface slice if your interface requires it
+	result := make([]user.User, len(dbUsers))
+	for i, u := range dbUsers {
+		result[i] = u
+	}
+
+	return result, nil
+}
+
 // GetUsers retrieves a paginated list of users registered in the database.
 // - limit: The maximum number of records to return (e.g., 5)
 // - offset: The number of records to skip before starting to return (e.g., 0 for the first page)
 func GetUsers(Db *gorm.DB, limit int, offset int) ([]user.User, error) {
-    var users []*User
+	var users []*User
 
-    // Find all records with limit and offset applied
-    if err := Db.Limit(limit).Offset(offset).Find(&users).Error; err != nil {
-        // Db.Find only returns an error on connection or query issue, not if the table is empty.
-        err1 := errors.New(errors.EARUserListRetrievalFailed, err)
-        err1.Log()
-        return nil, err1
-    }
+	// Find all records with limit and offset applied
+	if err := Db.Limit(limit).Offset(offset).Find(&users).Error; err != nil {
+		// Db.Find only returns an error on connection or query issue, not if the table is empty.
+		err1 := errors.New(errors.EARUserListRetrievalFailed, err)
+		err1.Log()
+		return nil, err1
+	}
 
-    // Transform [](*User) to []user.User
-    var userslist []user.User
-    for _, u := range users {
-        userslist = append(userslist, u)
-    }
+	// Transform [](*User) to []user.User
+	var userslist []user.User
+	for _, u := range users {
+		userslist = append(userslist, u)
+	}
 
-    return userslist, nil
+	return userslist, nil
 }
-
 
 // GetUsersByUUIDs retrieves all users whose QrCode UUID matches any of the given UUIDs.
 // Returns a nil slice if no matching users are found or if the input slice is empty.
@@ -112,5 +137,3 @@ func GetUsersByUUIDs(Db *gorm.DB, uuids []uuid.UUID) ([]user.User, error) {
 
 	return usersList, nil
 }
-
-
