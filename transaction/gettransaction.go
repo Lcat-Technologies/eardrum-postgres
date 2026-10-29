@@ -138,3 +138,27 @@ func GetTransactionsForMerchant(db *gorm.DB, merchantname string, limit *int, of
 
 	return transactionslist, nil
 }
+
+// GetTransactionsByReferences gets multiple transactions by a slice of transaction IDs.
+func GetTransactionsByReferences(Db *gorm.DB, transactionIDs []string) ([]transaction.Transaction, error) {
+    if len(transactionIDs) == 0 {
+        return nil, nil
+    }
+
+    var dbTransactions []*Transaction
+
+    // Use `IN ?` to fetch all matching transactions in a single database round-trip
+    if err := Db.Where("transaction_id IN ?", transactionIDs).Find(&dbTransactions).Error; err != nil {
+        err1 := errors.New(errors.EARInternalError, err)
+        err1.Log()
+        return nil, err1
+    }
+
+    // Convert concrete slice to interface slice to match your interfaces
+    result := make([]transaction.Transaction, len(dbTransactions))
+    for i, tx := range dbTransactions {
+        result[i] = tx
+    }
+
+    return result, nil
+}
